@@ -1,4 +1,4 @@
-name: CI/CD - TeaIsraelServer
+name: Deploy TeaIsraelServer
 
 on:
   push:
@@ -6,37 +6,18 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Клонировать репозиторий
-        uses: actions/checkout@v3
-
-      - name: 🛠️ Установить .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: 🔨 Построить и опубликовать проект
-        run: |
-          dotnet restore
-          dotnet publish -c Release -o publish
-
-      - name: 🚚 Загрузить файлы на сервер по SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "publish/*"
-          target: "/server/TeaIsraelServer"
-
-      - name: 🔁 Перезапустить сервер через SSH
+      - name: 🔁 Подключиться по SSH и развернуть на сервере
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            sudo systemctl restart teaisrael.service
+            cd /server/TeaIsraelServer
+            git pull origin main
+            dotnet publish -c Release -o out
+            nohup dotnet out/TeaIsraelServer.dll > log.txt 2>&1 &
