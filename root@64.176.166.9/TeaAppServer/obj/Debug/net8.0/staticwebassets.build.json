@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "cmleDMYZ3xmk3Zw3xfo9d4V49oPZECkSDCK98eHZa+g=",
+  "Source": "TeaAppServer",
+  "BasePath": "_content/TeaAppServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
