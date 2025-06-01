@@ -20,4 +20,4 @@ jobs:
             cd /server/TeaIsraelServer
             git pull origin main
             dotnet publish -c Release -o out
-            nohup dotnet out/TeaIsraelServer.dll > log.txt 2>&1 &
+            nohup dotnet out/TeaAppServer.dll > log.txt 2>&1 &
