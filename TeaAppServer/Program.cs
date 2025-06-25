@@ -27,7 +27,7 @@ app.UseForwardedHeaders();
 
 app.UseCors("AllowAll");
 
-app.MapGet("/", () => "API is running!");
+app.MapGet("/", () => "API is running! Enjoy your tea!");
 app.MapControllers();
 
 app.Urls.Add("http://0.0.0.0:5000");
